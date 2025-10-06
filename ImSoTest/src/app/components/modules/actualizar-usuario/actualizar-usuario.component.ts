@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 	styleUrl: './actualizar-usuario.component.css'
 })
 export class ActualizarUsuarioComponent {
-	usuarioForm!: FormGroup;
+	form!: FormGroup;
 	
 	constructor(
 		private http : UsuariosService, 
@@ -21,12 +21,12 @@ export class ActualizarUsuarioComponent {
 		public dialogRef: MatDialogRef<ActualizarUsuarioComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	){
-		this.usuarioForm = new FormGroup({
+		this.form = new FormGroup({
 			nombre: new FormControl('', [Validators.required, Validators.max(50)]),
 			apaterno: new FormControl('', []),
 			amaterno: new FormControl('', []),
 			correo: new FormControl('', [Validators.required, Validators.email]),
-			edad: new FormControl('', [Validators.required, Validators.min(1)]),
+			edad: new FormControl('', [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)]),
 			telefono: new FormControl('', [Validators.required]),
 		});
 	}
@@ -36,15 +36,25 @@ export class ActualizarUsuarioComponent {
 	}
 
 	ClickBtnActualizarUsuario() {
-		if (this.usuarioForm.valid) {
-			var json = this.usuarioForm.value;
+		if (this.form.valid) {
+			var json = this.form.value;
 			json.idPersona = this.data.usuario.idPersona;
 			json.idUsuario = this.data.usuario.idUsuario;
-			console.log(json); 
 			this.ActualizarUsuario(json);
 		} else {
-			this.usuarioForm.markAllAsTouched();
-			console.warn('Datos no validos');
+			this.form.markAllAsTouched();
+			if(this.form.controls['nombre']?.invalid){
+				this.toastr.warning('Nombre no válido!', 'Error!');
+				return;
+			}
+			if(this.form.controls['edad']?.invalid){
+				this.toastr.warning('Edad no válida!', 'Error!');
+				return;
+			}
+			if(this.form.controls['correo']?.invalid){
+				this.toastr.warning('Correo no válido!', 'Error!');
+				return;
+			}
 			this.toastr.warning('Datos inválidos!', 'Error!');
 		}
   	}
@@ -52,15 +62,15 @@ export class ActualizarUsuarioComponent {
 	ObtenerDatosUsuario(data : any) : any{
 		this.http.ObtenerDatosUsuario(data).subscribe({
 			next: (response) => {
-				this.usuarioForm.controls['nombre'].setValue(response.data?.nombre);
-				this.usuarioForm.controls['apaterno'].setValue(response.data?.aPaterno);
-				this.usuarioForm.controls['amaterno'].setValue(response.data?.aMaterno);
-				this.usuarioForm.controls['edad'].setValue(response.data?.edad);
-				this.usuarioForm.controls['correo'].setValue(response.data?.correo);
-				this.usuarioForm.controls['telefono'].setValue(response.data?.telefono);
+				this.form.controls['nombre'].setValue(response.data?.nombre);
+				this.form.controls['apaterno'].setValue(response.data?.aPaterno);
+				this.form.controls['amaterno'].setValue(response.data?.aMaterno);
+				this.form.controls['edad'].setValue(response.data?.edad);
+				this.form.controls['correo'].setValue(response.data?.correo);
+				this.form.controls['telefono'].setValue(response.data?.telefono);
 			},
 			error: (err) => {
-				console.error('Error al obtener el usuario:', err);
+				this.toastr.error('Error al obtener el usuario!', 'Error!');
 			}
 		});
 	}
@@ -71,7 +81,7 @@ export class ActualizarUsuarioComponent {
 				this.dialogRef.close(response);
 			},
 			error: (err) => {
-				console.error('Error al actualizar el usuario:', err);
+				this.toastr.error('Error al actualizar el usuario!', 'Error!');
 			}
 		});
 	}

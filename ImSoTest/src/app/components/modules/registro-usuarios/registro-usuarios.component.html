@@ -1,9 +1,9 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-12">
-            <h5>Registro de usuarios</h5>
+            <h5>Registrar usuario</h5>
         </div>
-        <form class="col-12" [formGroup]="usuarioForm">
+        <form class="col-12 mt-4" [formGroup]="form">
             
 
             <div class="row">
@@ -11,6 +11,10 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="">
                         <label for="nombre">Nombre</label>
+                        <div *ngIf="form.controls['nombre']?.invalid && form.controls['nombre']?.touched" style="color:red;">
+                            <span *ngIf="form.controls['nombre']?.errors?.['required']">El nombre es obligatorio</span>
+                            <span *ngIf="form.controls['nombre']?.errors?.['pattern']">No debe exceder los 50 caracteres</span>
+                        </div>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="apaterno" formControlName="apaterno" placeholder="">
@@ -23,10 +27,17 @@
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="edad" formControlName="edad" placeholder="">
                         <label for="edad">Edad (años)</label>
+                        <div *ngIf="form.controls['edad']?.invalid && form.controls['edad']?.touched" style="color:red;">
+                            <span *ngIf="form.controls['edad']?.errors?.['required']">La edad es obligatoria</span>
+                            <span *ngIf="form.controls['edad']?.errors?.['pattern']">Solo se permiten números enteros</span>
+                        </div>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="correo" formControlName="correo" placeholder="">
                         <label for="correo">Correo</label>
+                        <div *ngIf="form.controls['correo']?.invalid && form.controls['correo']?.touched" style="color:red;">
+                            <span *ngIf="form.controls['correo']?.errors?.['required']">El correo es obligatorio</span>
+                        </div>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="phone" class="form-control" id="telefono" formControlName="telefono" placeholder="">

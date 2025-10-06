@@ -13,7 +13,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 	styleUrl: './registro-usuarios.component.css'
 })
 export class RegistroUsuariosComponent {
-	usuarioForm!: FormGroup;
+	form!: FormGroup;
 
 	constructor(
 		private http : UsuariosService, 
@@ -21,23 +21,33 @@ export class RegistroUsuariosComponent {
 		public dialogRef: MatDialogRef<RegistroUsuariosComponent>,
     	@Inject(MAT_DIALOG_DATA) public data: any
 	){
-		this.usuarioForm = new FormGroup({
+		this.form = new FormGroup({
 			nombre: new FormControl('', [Validators.required, Validators.max(50)]),
 			apaterno: new FormControl('', []),
 			amaterno: new FormControl('', []),
 			correo: new FormControl('', [Validators.required, Validators.email]),
-			edad: new FormControl('', [Validators.required, Validators.min(1)]),
+			edad: new FormControl('', [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)]),
 			telefono: new FormControl('', [Validators.required]),
 		});
 	}
 
 	ClickBtnRegistrarUsuario() {
-		if (this.usuarioForm.valid) {
-			console.log(this.usuarioForm.value); 
-			this.RegistrarUsuario(this.usuarioForm.value);
+		if (this.form.valid) {
+			this.RegistrarUsuario(this.form.value);
 		} else {
-			this.usuarioForm.markAllAsTouched();
-			console.warn('Datos no validos');
+			this.form.markAllAsTouched();
+			if(this.form.controls['nombre']?.invalid){
+				this.toastr.warning('Nombre no válido!', 'Error!');
+				return;
+			}
+			if(this.form.controls['edad']?.invalid){
+				this.toastr.warning('Edad no válida!', 'Error!');
+				return;
+			}
+			if(this.form.controls['correo']?.invalid){
+				this.toastr.warning('Correo no válido!', 'Error!');
+				return;
+			}
 			this.toastr.warning('Datos inválidos!', 'Error!');
 		}
   	}

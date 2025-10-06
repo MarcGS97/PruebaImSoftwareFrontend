@@ -5,9 +5,10 @@
         </div>
         <form class="col-12" [formGroup]="usuarioForm">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 mt-4">
+                    Seguro de querer eliminar al suaurio <b>{{data?.usuario?.nombre}} {{data?.usuario?.aPaterno}} {{data?.usuario?.aMaterno}}</b> ?
                 </div>
-                <div class="col-12 mb-4 d-flex justify-content-center">
+                <div class="col-12 mb-4 mt-4 d-flex justify-content-center">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ClickBtnCancelar()">Cancelar</button>
                     <button type="button" class="btn btn-danger ms-4" (click)="ClickBtnEliminarUsuario()">Eliminar</button>
                 </div>

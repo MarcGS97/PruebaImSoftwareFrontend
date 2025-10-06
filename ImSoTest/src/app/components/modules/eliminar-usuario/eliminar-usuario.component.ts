@@ -41,7 +41,7 @@ export class EliminarUsuarioComponent {
 				this.dialogRef.close(response);
 			},
 			error: (err) => {
-				console.error('Error al eliminar el usuario:', err);
+				this.toastr.error('Error al eliminar el usuario!', 'Error!');
 			}
 		});
 	}

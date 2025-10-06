@@ -51,7 +51,7 @@ export class ControlUsuariosComponent {
 				});
 			},
 		error: (err) => {
-				console.error('Error al cargar usuarios:', err);
+				this.toastr.error('Error al cargar usuarios!', 'Error!');
 			}
 		});
 	}
