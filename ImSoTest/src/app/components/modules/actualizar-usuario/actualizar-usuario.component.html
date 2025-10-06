@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12">
+            <h5>Actualizar datos de usuarios</h5>
+        </div>
+        <form class="col-12" [formGroup]="usuarioForm">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="">
+                        <label for="nombre">Nombre</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="apaterno" formControlName="apaterno" placeholder="">
+                        <label for="apaterno">Apellido paterno</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="amaterno" formControlName="amaterno" placeholder="">
+                        <label for="amaterno">Apellido materno</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="edad" formControlName="edad" placeholder="">
+                        <label for="edad">Edad (años)</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="correo" formControlName="correo" placeholder="">
+                        <label for="correo">Correo</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="phone" class="form-control" id="telefono" formControlName="telefono" placeholder="">
+                        <label for="telefono">Telefono</label>
+                    </div>
+                </div>
+                <div class="col-12 mb-4 d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ClickBtnCancelar()">Cancelar</button>
+                    <button type="button" class="btn btn-primary ms-4" (click)="ClickBtnActualizarUsuario()">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

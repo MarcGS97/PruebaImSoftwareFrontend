@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12">
+            <h5>Eliminar usuario</h5>
+        </div>
+        <form class="col-12" [formGroup]="usuarioForm">
+            <div class="row">
+                <div class="col-12">
+                </div>
+                <div class="col-12 mb-4 d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ClickBtnCancelar()">Cancelar</button>
+                    <button type="button" class="btn btn-danger ms-4" (click)="ClickBtnEliminarUsuario()">Eliminar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
