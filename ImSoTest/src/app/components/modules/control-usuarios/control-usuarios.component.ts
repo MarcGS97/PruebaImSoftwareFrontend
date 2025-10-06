@@ -45,6 +45,7 @@ export class ControlUsuariosComponent {
 	ListaUsuarios() : any{
 		this.http.ListaUsuarios().subscribe({
 			next: (response) => {
+				this.usuarios = [];
 				this.usuarios = response.data.map((item : any) => {
 					item.fechaHoraRegistro = item.fechaHoraRegistro ? item.fechaHoraRegistro.replace('T', ' ') : '';
 					return item;
